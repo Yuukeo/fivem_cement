@@ -1,12 +1,12 @@
-ESX						= nil
-local CurrentAction		= nil
-local PlayerData		= {}
+ESX = nil
+local CurrentAction = nil
+local PlayerData = {}
 local pedIsTryingToLockpickVehicle  = false
-local timer = 1 --in minutes - Set the time during the player is outlaw
-local showOutlaw = true --Set if show outlaw act on map
-local blipTime = 35 --in second
-local showcopsmisbehave = true --show notification when cops steal too
-local timing = timer * 60000 --Don't touche it
+local timer = 1 		--in minutes - Set the time during the player is outlaw
+local showOutlaw = true 	--Set if show outlaw act on map
+local blipTime = 35 		--in second
+local showcopsmisbehave = true 	--show notification when cops steal too
+local timing = timer * 60000 	--Don't touche it
 local cancel = false
 local cachedBins = {}
 
@@ -140,9 +140,7 @@ function OpenTrashCan()
     ClearPedTasks(PlayerPedId())
 end
 
---//////////////////////////////////////////////--
---                LOCKPICK CHANCE               --
---//////////////////////////////////////////////--
+--LOCKPICK CHANCE
 function lockpickchance()
 	local nb = math.random(1, Config.percentage)
     percentage = Config.percentage
@@ -152,9 +150,8 @@ function lockpickchance()
         return false
     end
 end
---//////////////////////////////////////////////--
---                LOCK VEHICLES                 --
---//////////////////////////////////////////////--
+
+--LOCK VEHICLES
 local function has_value (tab, val)
     for index, value in ipairs(tab) do
         if value == val then
@@ -163,6 +160,7 @@ local function has_value (tab, val)
     end
     return false
 end
+
 Citizen.CreateThread(function()
 	while true do
 		-- gets if player is entering vehicle
@@ -217,13 +215,13 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 	end
 end)
+
 RegisterNetEvent('fivem_cement:setVehicleDoors')
 AddEventHandler('fivem_cement:setVehicleDoors', function(veh, doors)
 	SetVehicleDoorsLocked(veh, doors)
 end)
---//////////////////////////////////////////////--
---                 NOTIFICATION                 --
---//////////////////////////////////////////////--
+
+--NOTIFICATION
 GetPlayerName()
 
 RegisterNetEvent('fivem_cement:outlawLockNotify')
@@ -238,9 +236,8 @@ RegisterNetEvent("fivem_cement:notify2")
 AddEventHandler("fivem_cement:notify2", function(msg, target)
 	ESX.ShowAdvancedNotification(_U('911Call'), _U('911Lockpick'), _U('Lockcall'), 'CHAR_CALL911', 7)
 end)
---//////////////////////////////////////////////--
---                   NETWORK                    --
---//////////////////////////////////////////////--
+
+--NETWORK
 Citizen.CreateThread(function()
     while true do
         Wait(100)
@@ -251,9 +248,8 @@ Citizen.CreateThread(function()
         end
     end
 end)
---//////////////////////////////////////////////--
---           SUSPECT DESCRITION                 --
---//////////////////////////////////////////////--
+
+--SUSPECT DESCRITION
 Citizen.CreateThread( function()
     while true do
         Wait(100)
@@ -302,9 +298,8 @@ Citizen.CreateThread( function()
         end
     end
 end)
---//////////////////////////////////////////////--
---              SUSPECT LOCATION                --
---//////////////////////////////////////////////--
+
+--SUSPECT LOCATION
 RegisterNetEvent('fivem_cement:location')
 AddEventHandler('fivem_cement:location', function(tx, ty, tz)
     if PlayerData.job.name == 'police' then
@@ -325,9 +320,8 @@ AddEventHandler('fivem_cement:location', function(tx, ty, tz)
         end
     end
 end)
---//////////////////////////////////////////////--
---               LOCKPICK CHECK                 --
---//////////////////////////////////////////////--
+
+--LOCKPICK CHECK
 RegisterNetEvent('fivem_cement:Enable')
 AddEventHandler('fivem_cement:Enable', function()
 	pedIsTryingToLockpickVehicle = true
